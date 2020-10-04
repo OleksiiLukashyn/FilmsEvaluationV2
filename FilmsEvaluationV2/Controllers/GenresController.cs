@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using FilmsEvaluationV2.Data;
 using FilmsEvaluationV2.Models;
 using FilmsEvaluationV2.Attributes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FilmsEvaluationV2.Controllers
 {
-    [ForAdmin]
+    [Authorize]
     public class GenresController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,12 +20,14 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // GET: Genres
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Genres.ToListAsync());
         }
 
         // GET: Genres/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,6 +46,7 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // GET: Genres/Create
+        [ForAdmin]
         public IActionResult Create()
         {
             return View();
@@ -51,6 +55,7 @@ namespace FilmsEvaluationV2.Controllers
         // POST: Genres/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [ForAdmin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description")] Genre genre)
@@ -65,6 +70,7 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // GET: Genres/Edit/5
+        [ForAdmin]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,6 +89,7 @@ namespace FilmsEvaluationV2.Controllers
         // POST: Genres/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [ForAdmin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Genre genre)
@@ -116,6 +123,7 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // GET: Genres/Delete/5
+        [ForAdmin]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,6 +142,7 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // POST: Genres/Delete/5
+        [ForAdmin]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

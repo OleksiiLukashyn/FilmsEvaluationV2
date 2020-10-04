@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FilmsEvaluationV2.Data;
 using FilmsEvaluationV2.Models;
-using FilmsEvaluationV2.Attributes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FilmsEvaluationV2.Controllers
 {
-    [ForAdmin]
+    [Authorize]
     public class AppUsersController : Controller
     {
         private readonly ApplicationDbContext _context;

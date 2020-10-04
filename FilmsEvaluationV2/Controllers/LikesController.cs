@@ -19,12 +19,14 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // GET: Likes
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Likes.ToListAsync());
         }
 
         // GET: Likes/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

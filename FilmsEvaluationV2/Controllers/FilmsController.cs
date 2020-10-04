@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FilmsEvaluationV2.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public class FilmsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,13 +20,14 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // GET: Films
-        [Authorize(Roles = "user")]
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Films.ToListAsync());
         }
 
         // GET: Films/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,6 +46,7 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // GET: Films/Create
+        [ForAdmin]
         public IActionResult Create()
         {
             return View();
@@ -53,6 +55,7 @@ namespace FilmsEvaluationV2.Controllers
         // POST: Films/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [ForAdmin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Country,Year,Duration,Awards,Description,Picture")] Film film)
@@ -67,6 +70,7 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // GET: Films/Edit/5
+        [ForAdmin]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,6 +89,7 @@ namespace FilmsEvaluationV2.Controllers
         // POST: Films/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [ForAdmin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Country,Year,Duration,Awards,Description,Picture")] Film film)
@@ -118,6 +123,7 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // GET: Films/Delete/5
+        [ForAdmin]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,6 +142,7 @@ namespace FilmsEvaluationV2.Controllers
         }
 
         // POST: Films/Delete/5
+        [ForAdmin]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
